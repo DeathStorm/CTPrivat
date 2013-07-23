@@ -18,7 +18,7 @@ namespace _3dForge
 
         //Enviroment Werte
         const string name = "Monster";
-        const float money = 1.0f;
+        const float money = 1.0f; 
         const float experience = 10.0f;
         const int killsPlayerLivePoints = 1;
 
