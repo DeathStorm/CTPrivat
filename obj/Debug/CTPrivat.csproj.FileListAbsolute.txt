@@ -1,0 +1,5 @@
+D:\Users\CTopp\Documents\Visual Studio 2012\Projects\CTPrivat\CTPrivat\bin\Debug\CTPrivat.dll
+D:\Users\CTopp\Documents\Visual Studio 2012\Projects\CTPrivat\CTPrivat\bin\Debug\CTPrivat.pdb
+D:\Users\CTopp\Documents\Visual Studio 2012\Projects\CTPrivat\CTPrivat\obj\Debug\CTPrivat.csprojResolveAssemblyReference.cache
+D:\Users\CTopp\Documents\Visual Studio 2012\Projects\CTPrivat\CTPrivat\obj\Debug\CTPrivat.dll
+D:\Users\CTopp\Documents\Visual Studio 2012\Projects\CTPrivat\CTPrivat\obj\Debug\CTPrivat.pdb
