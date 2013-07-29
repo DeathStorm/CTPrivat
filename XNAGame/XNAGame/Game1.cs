@@ -19,6 +19,15 @@ namespace XNAGame
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        SpriteFont mainFont;
+
+        MouseState mouseState;
+        Texture2D mouseCursor;
+        int mouseX;
+        int mouseY;
+
+        Button btn = new Button(0);
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -34,7 +43,6 @@ namespace XNAGame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
             base.Initialize();
         }
 
@@ -46,8 +54,17 @@ namespace XNAGame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            mainFont = Content.Load<SpriteFont>("MainFont");
 
+            btn.LoadContent(Content,spriteBatch, "New", "");
+            mouseCursor = Content.Load<Texture2D>("Cursor");
             // TODO: use this.Content to load your game content here
+        }
+
+        void UpdateSprite(GameTime gameTime)
+        {
+            
+          
         }
 
         /// <summary>
@@ -65,12 +82,17 @@ namespace XNAGame
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
-        {
+        {          
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
-
             // TODO: Add your update logic here
+
+            mouseState = Mouse.GetState();
+            mouseX = mouseState.X;
+            mouseY = mouseState.Y;
+            btn.Update();
+
 
             base.Update(gameTime);
         }
@@ -83,9 +105,26 @@ namespace XNAGame
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+
+            
+
+            // Draw the sprite.
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+            //spriteBatch.Draw(mouseCursor, new Vector2(mouseX, mouseY), Color.Black);
+            spriteBatch.Draw(mouseCursor, new Vector2(mouseState.X, mouseState.Y), Color.Black);
+
+            btn.Draw(50,50);
+
+            btn.Click = new EventHandler(UpdateSprite);
+            
+            spriteBatch.End();
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
         }
+
+        public event 
+
+
     }
 }
