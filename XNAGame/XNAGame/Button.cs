@@ -9,7 +9,13 @@ namespace XNAGame
 {
     public class Button
     {
-        public event EventHandler Click;
+        public delegate void onClickHandler();
+
+        public event onClickHandler Click;
+
+        //public event EventHandler Click;
+
+
 
         private MouseState currentState;
         private MouseState lastState;
@@ -105,7 +111,8 @@ namespace XNAGame
                         lastState.RightButton == ButtonState.Pressed))
                     {
 
-                        this.OnClick(EventArgs.Empty);
+                        if (this.Click != null) this.Click();
+                        //this.OnClick(EventArgs.Empty);
                     }
                 }
                 else
@@ -126,7 +133,7 @@ namespace XNAGame
             position.Y = posY;
 
             if (enabled == true)
-            {
+            {                
                 batch.Draw(texture, position, null,
                     color, 0f, Origin,
                     scaleFactor, SpriteEffects.None, 0f);
@@ -139,12 +146,20 @@ namespace XNAGame
             }
         }
 
-        protected void OnClick(EventArgs args)
-        {
-            if (Click != null)
-            {
-                this.Click(this, args);
-            }
-        }
+        
+
+        //protected void OnClick(EventArgs args)
+        //{
+        //    //if (klicken != null)
+        //    //{
+        //    //    this.klicken();
+        //    //}
+
+        //    if (Click != null)
+        //    {
+        //        //this.Click(this, args);
+        //        this.Click();
+        //    }
+        //}
     }
 }

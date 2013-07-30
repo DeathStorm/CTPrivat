@@ -15,23 +15,43 @@ namespace XNAGame
     /// This is the main type for your game
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
-    { 
+    {
+        enum GameStatus { MainMenu, InGame };
+        enum SubMenus { None, Game, Character, Inventory };
+
+        private GameStatus currentGameStatus = GameStatus.MainMenu;
+        private SubMenus currentSubMenu = SubMenus.None;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        SpriteFont mainFont;
+        public static SpriteFont mainFont;
 
+        Texture2D Black;
+
+        //Maus Gedöns
         MouseState mouseState;
         Texture2D mouseCursor;
-        int mouseX;
-        int mouseY;
+        //Maus Gedöns
 
+        #region Buttons
         Button btn = new Button(0);
+        Button btnNewGame = new Button(0);
+        #endregion
+
 
         public Game1()
         {
+
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+        }
+
+        private void StartNewGame()
+        {
+            this.currentGameStatus = GameStatus.InGame;
+            this.currentSubMenu = SubMenus.Game;
         }
 
         /// <summary>
@@ -44,6 +64,8 @@ namespace XNAGame
         {
             // TODO: Add your initialization logic here
             base.Initialize();
+
+            btnNewGame.Click += new Button.onClickHandler(StartNewGame);
         }
 
         /// <summary>
@@ -56,15 +78,18 @@ namespace XNAGame
             spriteBatch = new SpriteBatch(GraphicsDevice);
             mainFont = Content.Load<SpriteFont>("MainFont");
 
-            btn.LoadContent(Content,spriteBatch, "New", "");
+            btn.LoadContent(Content, spriteBatch, "New", "");
+
+            btnNewGame.LoadContent(Content, spriteBatch, "NeuesSpiel", "");
             mouseCursor = Content.Load<Texture2D>("Cursor");
+            Black = Content.Load<Texture2D>("Black");
             // TODO: use this.Content to load your game content here
         }
 
         void UpdateSprite(GameTime gameTime)
         {
-            
-          
+
+
         }
 
         /// <summary>
@@ -82,17 +107,18 @@ namespace XNAGame
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
-        {          
+        {
+
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
             // TODO: Add your update logic here
 
             mouseState = Mouse.GetState();
-            mouseX = mouseState.X;
-            mouseY = mouseState.Y;
+            //mouseX = mouseState.X;
+            //mouseY = mouseState.Y;
             btn.Update();
-
+            btnNewGame.Update();
 
             base.Update(gameTime);
         }
@@ -106,24 +132,69 @@ namespace XNAGame
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
 
-            
+            switch (currentGameStatus)
+            {
+                case GameStatus.MainMenu:
+                    Draw_MainMenu();
+                    break;
+                case GameStatus.InGame:
+                    Draw_GameMenu();
+                    break;
+                default:
+                    break;
+            }
+
+            switch (currentSubMenu)
+            {
+                case SubMenus.None:
+                    //% NOthing
+                    break;
+                case SubMenus.Game:
+                    
+                    break;
+                default:
+                    break;
+            }
+
+            if (currentGameStatus == GameStatus.MainMenu)
+            {
+
+            }
 
             // Draw the sprite.
-            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
-            //spriteBatch.Draw(mouseCursor, new Vector2(mouseX, mouseY), Color.Black);
-            spriteBatch.Draw(mouseCursor, new Vector2(mouseState.X, mouseState.Y), Color.Black);
 
-            btn.Draw(50,50);
-
-            btn.Click = new EventHandler(UpdateSprite);
-            
-            spriteBatch.End();
             // TODO: Add your drawing code here
+
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+            spriteBatch.Draw(mouseCursor, new Vector2(mouseState.X, mouseState.Y), Color.Black);
+            spriteBatch.DrawString(mainFont, "DIES IST EIN TEST", new Vector2(100, 100), Color.Black);
+            //btn.Click = new EventHandler(UpdateSprite);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
 
-        public event 
+        void Draw_MainMenu()
+        {
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+            //spriteBatch.Draw(mouseCursor, new Vector2(mouseX, mouseY), Color.Black);
+
+
+            btn.Draw(50, 50);
+            btnNewGame.Draw(
+                GraphicsDevice.Viewport.Width / 2,
+                GraphicsDevice.Viewport.Height / 2);
+            //btn.Click = new EventHandler(UpdateSprite);
+
+            spriteBatch.End();
+        }
+
+        void Draw_GameMenu()
+        {
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+            spriteBatch.Draw(Black, new Rectangle(GraphicsDevice.Viewport.Width - 300, 0, 10, GraphicsDevice.Viewport.Height), Color.Black);
+            spriteBatch.End();
+        }
 
 
     }
