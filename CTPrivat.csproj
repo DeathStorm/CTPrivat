@@ -46,6 +46,9 @@
     <Compile Include="3dForge\ExampleUnit.cs" />
     <Compile Include="3dForge\Unit.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="CoG\GangMember.cs" />
+    <Compile Include="CoG\Item.cs" />
+    <Compile Include="CoG\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
